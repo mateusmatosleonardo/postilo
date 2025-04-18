@@ -1,8 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthConfig } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
+import { PrismaClient } from "@prisma/client";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+
+const prisma = new PrismaClient();
+
 const authOptions = {
+  adapter: PrismaAdapter(prisma),
+  session: { strategy: "jwt" },
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -10,7 +16,7 @@ const authOptions = {
     }),
   ],
   callbacks: {
-    session({ session, token }: { session: any; token: any }) {
+    session({ session, token }) {
       if (token.sub) session.user.userId = token.sub;
       return session;
     },
@@ -18,7 +24,7 @@ const authOptions = {
   pages: {
     signIn: "/sign-in",
   },
-};
+} as NextAuthConfig;
 
 export const { handlers, auth, signIn, signOut } = NextAuth(authOptions);
 
