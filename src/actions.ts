@@ -150,6 +150,23 @@ export async function getUserPosts(userId: string) {
   });
 }
 
+export async function getAllPosts() {
+  return await prisma.post.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+    include: {
+      user: true,
+      likes: true,
+      comments: {
+        include: {
+          user: true,
+        },
+      },
+    },
+  });
+}
+
 export async function deletePost(formData: FormData) {
   const session = await auth();
 
