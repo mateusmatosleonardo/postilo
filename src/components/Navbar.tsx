@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { auth, signOut } from "auth";
 import Link from "next/link";
+import { auth, signOut } from "auth";
 import { getUserByEmail } from "@/actions";
 import { FaPlusCircle } from "react-icons/fa";
 import Button from "./Button";
@@ -23,7 +23,7 @@ export default async function Navbar() {
         {user ? (
           <div className="flex gap-4 items-center">
             <Link
-              href="/post-new"
+              href="/post/new"
               className="font-medium text-white hover:text-zinc-200"
             >
               <FaPlusCircle className="text-white" size={20} />
@@ -45,9 +45,11 @@ export default async function Navbar() {
               <Image
                 src={user.image}
                 alt={`perfil de: ${user.name}`}
-                className="w-10 h-10 rounded-full"
+                className="w-10 h-10 rounded-full object-cover"
                 width={40}
                 height={40}
+                quality={100}
+                priority={true}
               />
             )}
             <form
