@@ -19,7 +19,7 @@ export default function ProfileForm({ user }: ProfileFormProps) {
 
   return (
     <div>
-      {formState.message && (
+      {/* {formState.message && (
         <div className="w-full mb-4">
           <p
             className={`${
@@ -29,13 +29,8 @@ export default function ProfileForm({ user }: ProfileFormProps) {
             {formState.message}
           </p>
         </div>
-      )}
-      <form
-        className="flex flex-col gap-4"
-        action={formAction}
-        encType="multipart/form-data"
-        method="POST"
-      >
+      )} */}
+      <form className="flex flex-col gap-4" action={formAction}>
         <input type="hidden" name="id" value={user.id} />
         <div>
           <Label text="Nome" htmlFor="name" />
