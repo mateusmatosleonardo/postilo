@@ -187,3 +187,61 @@ export async function deletePost(formData: FormData) {
 
   revalidatePath("/my-posts");
 }
+
+export async function likePost(postId: string, userId: string): Promise<void> {
+  const session = await auth();
+
+  if (!session) redirect("/");
+
+  if (session.user.userId !== userId) {
+    throw new Error("Unauthorized access");
+  }
+
+  const existingLike = await prisma.like.findFirst({
+    where: {
+      postId,
+      userId,
+    },
+  });
+
+  if (existingLike) {
+    await prisma.like.delete({
+      where: {
+        id: existingLike.id,
+      },
+    });
+  }
+
+  await prisma.like.create({
+    data: {
+      postId,
+      userId,
+    },
+  });
+
+  revalidatePath("/");
+}
+
+export async function commentPost(
+  postId: string,
+  userId: string,
+  content: string
+) {
+  const session = await auth();
+
+  if (!session) redirect("/");
+
+  if (session.user.userId !== userId) {
+    throw new Error("Unauthorized access");
+  }
+
+  await prisma.comment.create({
+    data: {
+      postId,
+      userId,
+      content,
+    },
+  });
+
+  revalidatePath("/");
+}
