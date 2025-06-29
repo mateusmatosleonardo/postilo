@@ -11,8 +11,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "NextGram",
-  description: "Aplicativo clone do Instagram com Next JS",
+  title: "Postilo",
+  description: "Postilo é uma plataforma de publicação de posts",
 };
 
 export default function RootLayout({
