@@ -48,7 +48,9 @@ export default async function MyPostsPage() {
                 height={300}
               />
               {post.caption && (
-                <p className="mb-2 text-sm font-medium">{post.caption}</p>
+                <p className="mb-2 text-sm font-medium w-full max-w-[290px] truncate">
+                  {post.caption}
+                </p>
               )}
               <form action={deletePost}>
                 <input type="hidden" name="userId" value={userId} />
