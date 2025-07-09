@@ -8,11 +8,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node.js
+      - name: 📥 Checkout do código
+        uses: actions/checkout@v4
+
+      - name: 🔧 Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "22.4.0"
-      - run: npm install
-      - run: npm run build
+
+      - name: 📦 Instalar dependências
+        run: npm install
+
+      - name: 🧬 Run Prisma Generate
+        run: npx prisma generate
+
+      - name: 🛠️ Build do projeto
+        run: npm run build
